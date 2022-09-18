@@ -9,7 +9,7 @@ load_dotenv(find_dotenv())
 def main():
     """Run administrative tasks."""
     config = os.getenv('ENVIRONMENT')
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'job_app.settings.'+ config)
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'job_app.settings.production')
 
     try:
         from django.core.management import execute_from_command_line
