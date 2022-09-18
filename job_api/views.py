@@ -5,16 +5,16 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from .serializers import JobAdvertSerializer, JobApplicationSerializer
 from .models import JobAdvert, JobApplication
 from django.db.models import Count
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import NotFound
-from accounts.permissions import IsAdminOnly, IsAdminOrReadOnly
+from accounts.permissions import IsAdminOnly, IsAdminOrReadOnly, IsUserOrReadOnly
 
 class JobPosting(APIView):
     
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     
     def get(self, request, format=None):
         """Allow logged in user to get adverts in the database. available adverts come first followed by adverts with the highest applicant count and then recently created adverts come next.
@@ -32,7 +32,7 @@ class JobPosting(APIView):
     @swagger_auto_schema(method="post", request_body=JobAdvertSerializer())
     @action(methods=["post"], detail=True)
     def post(self, request, format=None):
-        """Allow logged in users to create new job adverts."""
+        """Allow admin to create new job adverts."""
         
         serializer = JobAdvertSerializer(data=request.data)
         if serializer.is_valid():
@@ -127,7 +127,7 @@ def make_advert_unavailable(request, advert_id):
               
 @swagger_auto_schema(method="post", request_body=JobApplicationSerializer())
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsUserOrReadOnly])
 def job_application(request):
     """Allows only authenticated users to apply for only jobs that has been available."""
     
@@ -135,7 +135,8 @@ def job_application(request):
         serializer = JobApplicationSerializer(data=request.data)
         
         if serializer.is_valid():
-            advert = serializer.validated_data.get("advert")
+            advert_get = serializer.validated_data.get("job_advert")
+            advert = JobAdvert.objects.get(job_name=advert_get)
             if advert.status == "available":
                 serializer.save()
         
@@ -148,7 +149,7 @@ def job_application(request):
 class JobApplicationDetail(APIView):
     
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserOrReadOnly]
         
     def get_object(self, application_id):
         try:
@@ -175,9 +176,6 @@ class JobApplicationDetail(APIView):
 
 class AdvertRelateApplication(APIView):
 
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
     def get_object(self, advert_id):
         try:
             return JobAdvert.objects.get(id=advert_id)
@@ -189,5 +187,5 @@ class AdvertRelateApplication(APIView):
         
         posting = self.get_object(advert_id)
         obj = posting.applicants.all()
-        serializer = JobAdvertSerializer(obj, many=True)
+        serializer = JobApplicationSerializer(obj, many=True)
         return Response({'data' : serializer.data}, status=status.HTTP_200_OK)

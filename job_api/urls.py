@@ -9,5 +9,5 @@ urlpatterns = [
     path("adverts/<int:advert_id>/", views.JobAdvertDetail.as_view(), name="job-advert-detail"),
     path("applications/", views.job_application, name="job-application"),
     path("applications/<int:application_id>/", views.JobApplicationDetail.as_view(), name="job-application-detail"),
-    path("relate/<int:application_id>/", views.AdvertRelateApplication.as_view(), name="job-application-relate"),
+    path("relate/<int:advert_id>/", views.AdvertRelateApplication.as_view(), name="job-application-relate"),
 ]

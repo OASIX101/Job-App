@@ -35,7 +35,7 @@ class JobAdvert(models.Model):
         return self.applicants.all().values().count()
     
     def __str__(self):
-        return f"{self.job_name} --- {self.company_name}"
+        return f"{self.job_name}"
     
 class JobApplication(models.Model):
     

@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -9,6 +9,7 @@ from drf_yasg.utils import swagger_auto_schema
 from accounts.serializers import LogOutSerializer, LogInSerializer
 from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth.signals import user_logged_in, user_logged_out
+from .permissions import IsUserOrReadOnly
 
 
 @swagger_auto_schema(method="post",request_body=LogInSerializer())
@@ -85,6 +86,6 @@ def logout_view(request):
                                         request=request, user=user)
         logout(request)
         
-        return Response({"message": "success"}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "success"}, status=status.HTTP_200_OK)
     except TokenError:
         return Response({"message": "failed", "error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
