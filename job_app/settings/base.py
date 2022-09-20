@@ -166,5 +166,5 @@ REST_FRAMEWORK = {
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_FILE_STORAGE= 'whitenoise.storage.CompressedManifestStaticFileStorage'
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
