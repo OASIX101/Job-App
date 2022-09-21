@@ -127,7 +127,7 @@ def make_advert_unavailable(request, advert_id):
               
 @swagger_auto_schema(method="post", request_body=JobApplicationSerializer())
 @api_view(["POST"])
-@permission_classes([IsUserOrReadOnly])
+# @permission_classes([IsUserOrReadOnly])
 def job_application(request):
     """Allows only authenticated users to apply for only jobs that has been available."""
     
