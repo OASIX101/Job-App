@@ -2,7 +2,6 @@ from pathlib import Path
 import os
 from dotenv import find_dotenv, load_dotenv
 from django.utils.timezone import timedelta
-from job_app.settings import base
  
 load_dotenv(find_dotenv())
 
@@ -17,9 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['oasix.herokuapp.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -167,4 +166,3 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_FILE_STORAGE= 'whitenoise.storage.CompressedManifestStaticFileStorage'
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
