@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'job_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME'),
-        'USER': os.getenv('USER'),
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
-        'PORT': os.getenv('PORT'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'doqpsgd4391in',
+        'USER': 'ckddwnbrfkrbil',
+        'PASSWORD': '38fe5dd254672fb60fc88f5f4d858e9ec6a553ed4776886199ea931f4041fc41',
+        'HOST': 'ec2-35-168-194-15.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
