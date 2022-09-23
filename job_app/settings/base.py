@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'job_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME')
+        'NAME': os.getenv('NAME'),
         'USER': os.getenv('USER'),
         'PASSWORD': os.getenv('PASSWORD'),
         'HOST': os.getenv('HOST'),
