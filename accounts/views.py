@@ -42,6 +42,7 @@ def login_view(request):
                     'message' : "success",
                     'data' : user_details,
                     }
+        
                     return Response(data, status=status.HTTP_200_OK)
 
 

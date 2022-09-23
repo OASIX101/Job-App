@@ -164,7 +164,6 @@ class JobApplicationDetail(APIView):
         serializer = JobApplicationSerializer(application)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
     def delete(self, request, application_id, format=None):
         """Delete a single job application"""
         
